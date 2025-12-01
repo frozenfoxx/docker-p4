@@ -1,0 +1,20 @@
+services:
+  perforce:
+    build: ghcr.io/frozenfoxx/p4:latest
+    container_name: p4d-server
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    ports:
+      - "1666:1666"
+    environment:
+      - P4PORT=1666
+      - P4ROOT=/opt/perforce/server
+      - P4DEPOTS=/opt/perforce/depots
+      # - UID=1000
+      # - GID=1000
+    volumes:
+      - ./p4-data/server:/opt/perforce/server
+      - ./p4-data/depots:/opt/perforce/depots
