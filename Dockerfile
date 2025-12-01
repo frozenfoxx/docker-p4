@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Ensure directories exist and ownership is correct
-RUN mkdir -p $P4ROOT $P4DEPOTS \
+RUN mkdir -p $P4ROOT $P4_DEPOTS \
     && chown -R perforce:perforce /opt/perforce
 
 # Copy entrypoint script
@@ -36,6 +36,6 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 1666
 
 # Volumes for persistence
-VOLUME ["$P4ROOT", "$P4DEPOTS"]
+VOLUME ["$P4ROOT", "$P4_DEPOTS"]
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
