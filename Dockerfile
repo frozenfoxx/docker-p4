@@ -16,7 +16,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
-    shadow \
     && groupadd perforce \
     && useradd -g perforce -d /opt/perforce -s /bin/bash perforce \
     && wget -qO /usr/sbin/p4d ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4d \
