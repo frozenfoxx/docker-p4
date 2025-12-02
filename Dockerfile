@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && groupadd perforce \
     && useradd -g perforce -d /opt/perforce -s /bin/bash perforce \
+    && wget -qO /usr/sbin/p4 ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4 \
     && wget -qO /usr/sbin/p4d ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4d \
+    && chmod +x /usr/sbin/p4 \
     && chmod +x /usr/sbin/p4d \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

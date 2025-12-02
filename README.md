@@ -20,7 +20,7 @@ docker build -t frozenfoxx/p4:latest .
 
 ## Quickstart
 
-The following will run the latest P4 server with a default configuration
+The following will run the latest P4 server with a default configuration:
 
 ```Shell
 docker run -it \
@@ -30,4 +30,14 @@ docker run -it \
   -v /server/mount/server:/opt/perforce/server:rw \
   --name=p4 \
   frozenfoxx/p4:latest
+```
+
+If this is a fresh server, you'll want to create a superuser immediately:
+
+```Shell
+docker exec -it p4 /bin/bash
+
+export P4PORT=localhost:1666
+p4 user (fill in details)
+p4 protect (this will make you the superuser if you are the first to connect)
 ```
