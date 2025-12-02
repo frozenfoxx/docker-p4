@@ -48,10 +48,16 @@ map_ids()
 
     # If GID is provided and it differs from the 'perforce' user's current primary GID, update it
     if [ -n "$GID" ] && [ "$GID" != "$(id -g $P4_USER)" ]; then
-        echo "Modifying group '$P4_USER' GID to $GID..."
-        groupmod -g "$GID" "$P4_USER"
-        # Also update the primary group ID for the user
-        usermod -g "$GID" "$P4_USER"
+        # Check if a group with this GID already exists
+        if getent group "$GID" >/dev/null 2>&1; then
+            EXISTING_GROUP=$(getent group "$GID" | cut -d: -f1)
+            echo "Group with GID $GID already exists ($EXISTING_GROUP). Adding user '$P4_USER' to this group..."
+            usermod -g "$GID" "$P4_USER"
+        else
+            echo "Modifying group '$P4_USER' GID to $GID..."
+            groupmod -g "$GID" "$P4_USER"
+            usermod -g "$GID" "$P4_USER"
+        fi
     fi
 }
 
