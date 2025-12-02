@@ -38,6 +38,7 @@ If this is a fresh server, you'll want to create a superuser immediately:
 docker exec -it p4d /bin/bash
 
 export P4PORT=localhost:1666
-p4 user (fill in details)
+p4 user (fill in details for root)
 p4 protect (this will make you the superuser if you are the first to connect)
+p4 passwd (set root password)
 ```
