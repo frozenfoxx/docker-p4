@@ -1,19 +1,19 @@
-# docker-p4
+# docker-p4d
 
-[![Build](https://github.com/frozenfoxx/docker-p4/actions/workflows/build.yml/badge.svg)](https://github.com/frozenfoxx/docker-p4/actions/workflows/build.yml)
+[![Build](https://github.com/frozenfoxx/docker-p4d/actions/workflows/build.yml/badge.svg)](https://github.com/frozenfoxx/docker-p4d/actions/workflows/build.yml)
 
 A [Docker](https://docker.io) container for running a [Perforce P4](https://help.perforce.com/helix-core/quickstart/current/Content/quickstart/Home-quickstart.html) server.
 
-Docker Hub: https://hub.docker.com/r/frozenfoxx/p4
+Docker Hub: https://hub.docker.com/r/frozenfoxx/p4d
 
 # How to Build
 
 To build the default image input the following:
 
 ```Shell
-git clone https://github.com/frozenfoxx/docker-p4.git
-cd docker-p4
-docker build -t frozenfoxx/p4:latest .
+git clone https://github.com/frozenfoxx/docker-p4d.git
+cd docker-p4d
+docker build -t frozenfoxx/p4d:latest .
 ```
 
 # How to Use this Image
@@ -28,14 +28,14 @@ docker run -it \
   -p 1666:1666 \
   -v /server/mount/depots:/opt/perforce/depots:rw \
   -v /server/mount/server:/opt/perforce/server:rw \
-  --name=p4 \
-  frozenfoxx/p4:latest
+  --name=p4d \
+  frozenfoxx/p4d:latest
 ```
 
 If this is a fresh server, you'll want to create a superuser immediately:
 
 ```Shell
-docker exec -it p4 /bin/bash
+docker exec -it p4d /bin/bash
 
 export P4PORT=localhost:1666
 p4 user (fill in details)
