@@ -18,3 +18,9 @@ services:
     volumes:
       - ./server:/opt/perforce/server
       - ./depots:/opt/perforce/depots
+    healthcheck:
+      test: ["CMD", "/usr/sbin/p4", "-p", "1666", "info"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

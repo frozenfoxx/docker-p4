@@ -18,28 +18,26 @@ ENV APP_DEPS=" \
 
 # Install dependencies, Create User, and Download Binary
 RUN apt-get update && apt-get install -y \
-    ${APP_DEPS} \
-    && groupadd perforce \
-    && useradd -g perforce -d /opt/perforce -s /bin/bash perforce \
+    ca-certificates \
+    gosu \
+    vim \
+    wget \
+    && groupadd -r perforce \
+    && useradd -r -g perforce -d /opt/perforce -s /bin/bash perforce \
     && wget -qO /usr/sbin/p4 ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4 \
     && wget -qO /usr/sbin/p4d ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4d \
-    && chmod +x /usr/sbin/p4 \
-    && chmod +x /usr/sbin/p4d \
+    && chmod +x /usr/sbin/p4 /usr/sbin/p4d \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Ensure directories exist and ownership is correct
 RUN mkdir -p $P4ROOT $P4_DEPOTS \
-    && chown -R perforce:perforce /opt/perforce
+  && chown -R perforce:perforce /opt/perforce
 
-# Copy entrypoint script
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Expose the Perforce port
 EXPOSE 1666
 
-# Volumes for persistence
 VOLUME ["$P4ROOT", "$P4_DEPOTS"]
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
